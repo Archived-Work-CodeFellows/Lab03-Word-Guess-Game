@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lab-03-Word-Guess", "Lab-03-Word-Guess\Lab-03-Word-Guess.csproj", "{29B63487-D0ED-46E1-8E08-5271D3B3386E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Word-Guess-Tests", "Word-Guess-Tests\Word-Guess-Tests.csproj", "{3C86445E-CECD-4062-A86D-2531E389CF87}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{29B63487-D0ED-46E1-8E08-5271D3B3386E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29B63487-D0ED-46E1-8E08-5271D3B3386E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29B63487-D0ED-46E1-8E08-5271D3B3386E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29B63487-D0ED-46E1-8E08-5271D3B3386E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C86445E-CECD-4062-A86D-2531E389CF87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C86445E-CECD-4062-A86D-2531E389CF87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C86445E-CECD-4062-A86D-2531E389CF87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C86445E-CECD-4062-A86D-2531E389CF87}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8C044484-959C-4C1A-9579-B02D6E9C4559}
+	EndGlobalSection
+EndGlobal
