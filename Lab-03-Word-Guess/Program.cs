@@ -12,9 +12,6 @@ namespace Lab_03_Word_Guess
             CreateFile(path, wordList);
 
             UserMainMenu(path);
-            //UpdateFile(path, "doggo");
-            //ReadFile(path);
-            //DeleteFile(path);
         }
         /// <summary>
         /// Landing interface at application start, gives
@@ -88,7 +85,7 @@ namespace Lab_03_Word_Guess
                     {
                         Console.Clear();
                         DeleteFile(path);
-                        Console.WriteLine("Alright all gone! Your word list will be reset when the app restarts!");
+                        Console.WriteLine("Alright all gone! Your word list will be reset when you run the app again!");
                         Console.WriteLine("Bye-bye!");
                         Environment.Exit(0);
                     }
@@ -159,7 +156,10 @@ namespace Lab_03_Word_Guess
             }
             return false;
         }
-
+        /// <summary>
+        /// This method allows users to remove a word based on what they type
+        /// </summary>
+        /// <param name="path">Location of File</param>
         public static void RemoveWord(string path)
         {
             string[] wordList = ReadFile(path);
