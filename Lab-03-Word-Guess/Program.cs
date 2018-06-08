@@ -12,9 +12,6 @@ namespace Lab_03_Word_Guess
             CreateFile(path, wordList);
 
             UserMainMenu(path);
-            //UpdateFile(path, "doggo");
-            //ReadFile(path);
-            //DeleteFile(path);
         }
         /// <summary>
         /// Landing interface at application start, gives
@@ -70,12 +67,14 @@ namespace Lab_03_Word_Guess
                     Console.Clear();
                     Console.WriteLine("Please type in the word you would like to add!");
                     string addedWord = Console.ReadLine();
-                    UpdateFile(path, addedWord);
+                    AddWord(path, addedWord);
                     WordListMenu(path);
                     break;
                 case "3":
                     Console.Clear();
-                    Console.WriteLine("Remove word");
+                    RemoveWord(path);
+                    Console.Clear();
+                    WordListMenu(path);
                     break;
                 case "4":
                     Console.Clear();
@@ -86,13 +85,14 @@ namespace Lab_03_Word_Guess
                     {
                         Console.Clear();
                         DeleteFile(path);
-                        Console.WriteLine("Alright all gone! Your word list will be reset when the app restarts!");
+                        Console.WriteLine("Alright all gone! Your word list will be reset when you run the app again!");
                         Console.WriteLine("Bye-bye!");
                         Environment.Exit(0);
                     }
                     else
                     {
                         Console.WriteLine("I'll assume no then...");
+                        Console.WriteLine(" ");
                         Console.Clear();
                         WordListMenu(path);
                     }
@@ -144,7 +144,7 @@ namespace Lab_03_Word_Guess
         /// <param name="path">Location of File</param>
         /// <param name="word">The string to be added to the File</param>
         /// <returns>Bool to inform programmer of it's success</returns>
-        public static bool UpdateFile(string path, string word)
+        public static bool AddWord(string path, string word)
         {
             if (File.Exists(path))
             {
@@ -155,6 +155,35 @@ namespace Lab_03_Word_Guess
                 return true;
             }
             return false;
+        }
+        /// <summary>
+        /// This method allows users to remove a word based on what they type
+        /// </summary>
+        /// <param name="path">Location of File</param>
+        public static void RemoveWord(string path)
+        {
+            string[] wordList = ReadFile(path);
+            Console.WriteLine(" ");
+            Console.WriteLine("Which word would you like to remove?");
+            string wordRemove = Console.ReadLine().ToLower();
+            try
+            {
+                for (int i = 0; i < wordList.Length; i++)
+                {
+                    wordList[i] = wordRemove == wordList[i].ToLower() ? " " : wordList[i];
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Oops...something went wrong");
+            }
+            using (StreamWriter sw = new StreamWriter(path))
+            {
+                for(int i = 0; i < wordList.Length; i++)
+                {
+                    if (wordList[i] != " ") sw.WriteLine(wordList[i]);
+                }
+            }
         }
         /// <summary>
         /// This will allow for the removal of the file

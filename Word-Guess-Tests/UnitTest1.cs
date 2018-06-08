@@ -26,7 +26,7 @@ namespace Word_Guess_Tests
         {
             string path = "../../../testFile.txt";
             string word = "doggo";
-            Assert.True(Program.UpdateFile(path, word));
+            Assert.True(Program.AddWord(path, word));
              
         }
         [Fact]
