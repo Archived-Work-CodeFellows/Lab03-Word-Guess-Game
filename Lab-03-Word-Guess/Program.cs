@@ -16,7 +16,11 @@ namespace Lab_03_Word_Guess
             //ReadFile(path);
             //DeleteFile(path);
         }
-
+        /// <summary>
+        /// Landing interface at application start, gives
+        /// user navigation options
+        /// </summary>
+        /// <param name="path">Location of File</param>
         static void UserMainMenu(string path)
         {
             Console.Clear();
@@ -41,7 +45,11 @@ namespace Lab_03_Word_Guess
                     break;
             }
         }
-
+        /// <summary>
+        /// Menu interaction for interacting with the file. Users can view, add word,
+        /// delete word, remove file to get a fresh start
+        /// </summary>
+        /// <param name="path">Location of file</param>
         static void WordListMenu(string path)
         {
             Console.WriteLine("Please Select and option...");
@@ -55,7 +63,6 @@ namespace Lab_03_Word_Guess
             {
                 case "1":
                     Console.Clear();
-                    Console.WriteLine(ReadFile(path));
                     WordListMenu(path);
                     break;
                 case "2":
@@ -119,7 +126,7 @@ namespace Lab_03_Word_Guess
         /// being assigned in an index
         /// </summary>
         /// <param name="path">Location of the file</param>
-        /// <returns></returns>
+        /// <returns>String array to house all words</returns>
         public static string[] ReadFile(string path)
         {
             string[] wordList = File.ReadAllLines(path);
