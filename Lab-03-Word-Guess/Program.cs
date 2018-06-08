@@ -14,8 +14,12 @@ namespace Lab_03_Word_Guess
             UpdateFile(path, "doggo");
             ReadFile(path);
             DeleteFile(path);
-        }
-
+        }   
+        /// <summary>
+        /// This will create a file in the specified path
+        /// </summary>
+        /// <param name="path">Location of the file</param>
+        /// <returns>Bool to inform programmer if file was created or already existed</returns>
         public static bool CreateFile(string path)
         {
             if (!File.Exists(path))
@@ -28,7 +32,12 @@ namespace Lab_03_Word_Guess
             }
             return false;
         }
-
+        /// <summary>
+        /// This will read the contents of file by creating an array with each line
+        /// being assigned in an index
+        /// </summary>
+        /// <param name="path">Location of the file</param>
+        /// <returns>Bool to inform programmer of it's success</returns>
         public static bool ReadFile(string path)
         {
             try
@@ -46,7 +55,13 @@ namespace Lab_03_Word_Guess
             }
             return false;
         }
-
+        /// <summary>
+        /// This will allow a passing value be added to the file via user
+        /// input
+        /// </summary>
+        /// <param name="path">Location of File</param>
+        /// <param name="word">The string to be added to the File</param>
+        /// <returns>Bool to inform programmer of it's success</returns>
         public static bool UpdateFile(string path, string word)
         {
             if (File.Exists(path))
@@ -60,7 +75,11 @@ namespace Lab_03_Word_Guess
             }
             return false;
         }
-
+        /// <summary>
+        /// This will allow for the removal of the file
+        /// </summary>
+        /// <param name="path">Location of file</param>
+        /// <returns>Bool to inform programmer of it's success</returns>
         public static bool DeleteFile(string path)
         {
             File.Delete(path);
