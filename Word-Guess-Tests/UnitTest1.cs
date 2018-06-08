@@ -10,13 +10,16 @@ namespace Word_Guess_Tests
         public void CreateFile()
         {
             string path = "../../../testFile.txt";
-            Assert.True(Program.CreateFile(path));
+            string[] wordList = new string[] { "dog", "saxophone", "laptop", "apples", "code", "taco cat" };
+            Assert.True(Program.CreateFile(path, wordList));
         }
         [Fact]
         public void ReadFile()
         {
             string path = "../../../testFile.txt";
-            Assert.True(Program.ReadFile(path));
+            string[] wordList = new string[] { "dog", "saxophone", "laptop", "apples", "code", "taco cat" };
+            CollectionAttribute.Equals(wordList, Program.ReadFile(path));
+           
         }
         [Fact]
         public void UpdateFile()
