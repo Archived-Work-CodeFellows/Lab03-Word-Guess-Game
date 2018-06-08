@@ -63,6 +63,7 @@ namespace Lab_03_Word_Guess
             {
                 case "1":
                     Console.Clear();
+                    ReadFile(path);
                     WordListMenu(path);
                     break;
                 case "2":
