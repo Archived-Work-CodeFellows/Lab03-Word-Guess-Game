@@ -18,7 +18,7 @@ namespace Word_Guess_Tests
         {
             string path = "../../../testFile.txt";
             string[] wordList = new string[] { "dog", "saxophone", "laptop", "apples", "code", "taco cat" };
-            CollectionAttribute.Equals(wordList, Program.ReadFile(path));
+            Equals(wordList, Program.ReadFile(path));
            
         }
         [Fact]
@@ -34,7 +34,7 @@ namespace Word_Guess_Tests
         {
             string path = "../../../testFile.txt";
             string[] wordList = new string[] { "dog", "saxophone", "laptop", "apples", "code", "taco cat" };
-            CollectionAttribute.Equals(wordList, Program.WordGrabber(path));
+            Equals(wordList, Program.WordGrabber(path));
         }
         [Fact]
         public void DeleteFile()
