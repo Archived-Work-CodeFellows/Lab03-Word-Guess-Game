@@ -34,8 +34,9 @@ namespace Lab_03_Word_Guess
                 switch (select)
                 {
                     case "1":
-                        Console.WriteLine(WordGrabber(path));
-                        Console.ReadLine();
+                        string mysteryWord = WordGrabber(path);
+                        Console.Clear();
+                        GuessingGame(mysteryWord);
                         break;
                     case "2":
                         Console.Clear();
@@ -191,18 +192,67 @@ namespace Lab_03_Word_Guess
                 }
             }
         }/// <summary>
-        /// This takes in the path of the file and reads the contents
-        /// into an array and will randomly select a word based
-        /// off of that
-        /// </summary>
-        /// <param name="path">Location of file</param>
-        /// <returns>The randomly selected word</returns>
+         /// This takes in the path of the file and reads the contents
+         /// into an array and will randomly select a word based
+         /// off of that
+         /// </summary>
+         /// <param name="path">Location of file</param>
+         /// <returns>The randomly selected word</returns>
         public static string WordGrabber(string path)
         {
             string[] wordList = ReadFile(path);
             Random random = new Random();
             int randNum = random.Next(0, wordList.Length);
             return wordList[randNum];
+        }
+
+        static void GuessingGame(string mysteryWord)
+        {
+            string guesses = "";
+            bool guessing = true;
+            string[] reveal = new string[mysteryWord.Length];
+            char[] word = mysteryWord.ToCharArray();
+            int lettersLeft = mysteryWord.Length;
+
+            while (guessing)
+            {
+                Console.Clear();
+                for (int i = 0; i < mysteryWord.Length; i++)
+                {
+                    if (reveal[i] == null) Console.Write("|_|");
+                    else Console.Write($"{reveal[i]}");
+                }
+
+                Console.WriteLine($" User Guesses: {guesses}");
+                Console.WriteLine(" ");
+                Console.WriteLine("Please guess a letter!");
+                string userGuess = Console.ReadLine();
+                try
+                {
+                    if (userGuess.Length < 2)
+                    {
+                        guesses = guesses + userGuess;
+                        if (mysteryWord.Contains(userGuess))
+                        {
+                            char[] check = userGuess.ToCharArray();
+                            for (int i = 0; i < mysteryWord.Length; i++)
+                            {
+                                if(check[0] == word[i])
+                                {
+                                    reveal[i] = userGuess;
+                                    lettersLeft--;
+                                }
+                            }
+                        }
+                    }
+                    guessing = lettersLeft > 0 ? true : false;
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    Console.WriteLine("I see what you did there...sorry can't just press enter!");
+                    Console.ReadLine();
+                }
+            }
         }
         /// <summary>
         /// This will allow for the removal of the file
