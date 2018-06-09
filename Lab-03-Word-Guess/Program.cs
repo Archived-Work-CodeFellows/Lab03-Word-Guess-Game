@@ -7,7 +7,7 @@ namespace Lab_03_Word_Guess
     {
         static void Main(string[] args)
         {
-            string path = "../../../testFile.txt";
+            string path = "../../../WordList.txt";
             string[] wordList = new string[] { "dog", "saxophone", "laptop", "apples", "code", "taco cat" };
             CreateFile(path, wordList);
 
@@ -20,26 +20,31 @@ namespace Lab_03_Word_Guess
         /// <param name="path">Location of File</param>
         static void UserMainMenu(string path)
         {
-            Console.Clear();
-            Console.WriteLine("Welcome to the Josie Cat Guess A Word, Word Guess Game!");
-            Console.Write("\n\n");
-            Console.WriteLine("Please make a selection");
-            Console.WriteLine("1) Play Game");
-            Console.WriteLine("2) Word List");
-            Console.WriteLine("3) Exit");
-            string select = Console.ReadLine();
-            switch (select)
+            bool isRunning = true;
+            while (isRunning)
             {
-                case "1":
-                    Console.WriteLine("Game Code");
-                    break;
-                case "2":
-                    Console.Clear();
-                    WordListMenu(path);
-                    break;
-                default:
-                    Environment.Exit(0);
-                    break;
+                Console.Clear();
+                Console.WriteLine("Welcome to the Josie Cat Guess A Word, Word Guess Game!");
+                Console.Write("\n\n");
+                Console.WriteLine("Please make a selection");
+                Console.WriteLine("1) Play Game");
+                Console.WriteLine("2) Word List");
+                Console.WriteLine("3) Exit");
+                string select = Console.ReadLine();
+                switch (select)
+                {
+                    case "1":
+                        Console.WriteLine("Game Code");
+                        break;
+                    case "2":
+                        Console.Clear();
+                        WordListMenu(path);
+                        break;
+                    default:
+                        isRunning = false;
+                        Environment.Exit(0);
+                        break;
+                }
             }
         }
         /// <summary>
@@ -49,57 +54,57 @@ namespace Lab_03_Word_Guess
         /// <param name="path">Location of file</param>
         static void WordListMenu(string path)
         {
-            Console.WriteLine("Please Select and option...");
-            Console.WriteLine("");
-            Console.WriteLine("1) View Words");
-            Console.WriteLine("2) Add Word");
-            Console.WriteLine("3) Remove Word");
-            Console.WriteLine("4) Remove File");
-            string input = Console.ReadLine();
-            switch (input)
+            bool isRunning = true;
+            while (isRunning)
             {
-                case "1":
-                    Console.Clear();
-                    ReadFile(path);
-                    WordListMenu(path);
-                    break;
-                case "2":
-                    Console.Clear();
-                    Console.WriteLine("Please type in the word you would like to add!");
-                    string addedWord = Console.ReadLine();
-                    AddWord(path, addedWord);
-                    WordListMenu(path);
-                    break;
-                case "3":
-                    Console.Clear();
-                    RemoveWord(path);
-                    Console.Clear();
-                    WordListMenu(path);
-                    break;
-                case "4":
-                    Console.Clear();
-                    Console.WriteLine("This will remove the file and give you a fresh start!");
-                    Console.WriteLine("Are you sure? yes/no ");
-                    string confirm = Console.ReadLine().ToLower();
-                    if (confirm == "yes" || confirm == "y")
-                    {
+                Console.WriteLine("Please Select and option...");
+                Console.WriteLine("");
+                Console.WriteLine("1) View Words");
+                Console.WriteLine("2) Add Word");
+                Console.WriteLine("3) Remove Word");
+                Console.WriteLine("4) Remove File");
+                string input = Console.ReadLine();
+                switch (input)
+                {
+                    case "1":
                         Console.Clear();
-                        DeleteFile(path);
-                        Console.WriteLine("Alright all gone! Your word list will be reset when you run the app again!");
-                        Console.WriteLine("Bye-bye!");
-                        Environment.Exit(0);
-                    }
-                    else
-                    {
-                        Console.WriteLine("I'll assume no then...");
-                        Console.WriteLine(" ");
+                        ReadFile(path);
+                        break;
+                    case "2":
                         Console.Clear();
-                        WordListMenu(path);
-                    }
-                    break;
-                default:
-                    UserMainMenu(path);
-                    break;
+                        Console.WriteLine("Please type in the word you would like to add!");
+                        string addedWord = Console.ReadLine();
+                        AddWord(path, addedWord);
+                        break;
+                    case "3":
+                        Console.Clear();
+                        RemoveWord(path);
+                        Console.Clear();
+                        break;
+                    case "4":
+                        Console.Clear();
+                        Console.WriteLine("This will remove the file and give you a fresh start!");
+                        Console.WriteLine("Are you sure? yes/no ");
+                        string confirm = Console.ReadLine().ToLower();
+                        if (confirm == "yes" || confirm == "y")
+                        {
+                            Console.Clear();
+                            DeleteFile(path);
+                            Console.WriteLine("Alright all gone! Your word list will be reset when you run the app again!");
+                            Console.WriteLine("Bye-bye!");
+                            Environment.Exit(0);
+                        }
+                        else
+                        {
+                            Console.WriteLine("I'll assume no then...");
+                            Console.WriteLine(" ");
+                            Console.Clear();
+                        }
+                        break;
+                    default:
+                        isRunning = false;
+                        break;
+                }
             }
         }
         /// <summary>
@@ -179,7 +184,7 @@ namespace Lab_03_Word_Guess
             }
             using (StreamWriter sw = new StreamWriter(path))
             {
-                for(int i = 0; i < wordList.Length; i++)
+                for (int i = 0; i < wordList.Length; i++)
                 {
                     if (wordList[i] != " ") sw.WriteLine(wordList[i]);
                 }
