@@ -34,7 +34,8 @@ namespace Lab_03_Word_Guess
                 switch (select)
                 {
                     case "1":
-                        Console.WriteLine("Game Code");
+                        Console.WriteLine(WordGrabber(path));
+                        Console.ReadLine();
                         break;
                     case "2":
                         Console.Clear();
@@ -68,7 +69,11 @@ namespace Lab_03_Word_Guess
                 {
                     case "1":
                         Console.Clear();
-                        ReadFile(path);
+                        string[] wordList = ReadFile(path);
+                        foreach (string element in wordList)
+                        {
+                            Console.WriteLine(element);
+                        }
                         break;
                     case "2":
                         Console.Clear();
@@ -136,10 +141,6 @@ namespace Lab_03_Word_Guess
         public static string[] ReadFile(string path)
         {
             string[] wordList = File.ReadAllLines(path);
-            foreach (string element in wordList)
-            {
-                Console.WriteLine(element);
-            }
             return wordList;
         }
         /// <summary>
@@ -189,6 +190,19 @@ namespace Lab_03_Word_Guess
                     if (wordList[i] != " ") sw.WriteLine(wordList[i]);
                 }
             }
+        }/// <summary>
+        /// This takes in the path of the file and reads the contents
+        /// into an array and will randomly select a word based
+        /// off of that
+        /// </summary>
+        /// <param name="path">Location of file</param>
+        /// <returns>The randomly selected word</returns>
+        public static string WordGrabber(string path)
+        {
+            string[] wordList = ReadFile(path);
+            Random random = new Random();
+            int randNum = random.Next(0, wordList.Length);
+            return wordList[randNum];
         }
         /// <summary>
         /// This will allow for the removal of the file

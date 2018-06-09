@@ -30,6 +30,13 @@ namespace Word_Guess_Tests
              
         }
         [Fact]
+        public void RandomWord()
+        {
+            string path = "../../../testFile.txt";
+            string[] wordList = new string[] { "dog", "saxophone", "laptop", "apples", "code", "taco cat" };
+            CollectionAttribute.Equals(wordList, Program.WordGrabber(path));
+        }
+        [Fact]
         public void DeleteFile()
         {
             string path = "../../../testFile.txt";
