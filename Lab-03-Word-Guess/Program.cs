@@ -35,8 +35,14 @@ namespace Lab_03_Word_Guess
                 {
                     case "1":
                         string mysteryWord = WordGrabber(path);
-                        Console.Clear();
-                        GuessingGame(mysteryWord);
+                        bool replay = true;
+                        while (replay)
+                        {
+                            Console.Clear();
+                            GuessingGame(mysteryWord);
+                            replay = ReplayGame(mysteryWord);
+                            mysteryWord = WordGrabber(path);
+                        }
                         break;
                     case "2":
                         Console.Clear();
@@ -65,6 +71,7 @@ namespace Lab_03_Word_Guess
                 Console.WriteLine("2) Add Word");
                 Console.WriteLine("3) Remove Word");
                 Console.WriteLine("4) Remove File");
+                Console.Write("Press enter if you wish to return to main menu... ");
                 string input = Console.ReadLine();
                 switch (input)
                 {
@@ -84,6 +91,11 @@ namespace Lab_03_Word_Guess
                         break;
                     case "3":
                         Console.Clear();
+                        wordList = ReadFile(path);
+                        foreach (string element in wordList)
+                        {
+                            Console.WriteLine(element);
+                        }
                         RemoveWord(path);
                         Console.Clear();
                         break;
@@ -104,6 +116,7 @@ namespace Lab_03_Word_Guess
                         {
                             Console.WriteLine("I'll assume no then...");
                             Console.WriteLine(" ");
+                            Console.ReadLine();
                             Console.Clear();
                         }
                         break;
@@ -112,6 +125,26 @@ namespace Lab_03_Word_Guess
                         break;
                 }
             }
+        }
+        /// <summary>
+        /// This method allows the user to decide to play again
+        /// </summary>
+        /// <param name="mysteryWord">The word that the user had guessed</param>
+        /// <returns>Determines if the while statement stays active</returns>
+        public static bool ReplayGame(string mysteryWord)
+        {
+            Console.Clear();
+            Console.WriteLine($"Yay! You did it. You figured out that the word was {mysteryWord}");
+            Console.WriteLine(" ");
+            Console.WriteLine("I can only give you theoretical dollars so here is 100 theoretical dollars!");
+            Console.WriteLine("Would you like to play again? yes/no");
+            string input = Console.ReadLine().ToLower();
+
+            if (input == "y" || input == "yes") return true;
+            Console.Clear();
+            Console.WriteLine("I'll return you back the the main menu!");
+            Console.ReadLine();
+            return false;
         }
         /// <summary>
         /// This will create a file in the specified path
@@ -155,11 +188,14 @@ namespace Lab_03_Word_Guess
         {
             if (File.Exists(path))
             {
-                using (StreamWriter sw = File.AppendText(path))
+                if (word.Length > 0)
                 {
-                    sw.WriteLine(word);
+                    using (StreamWriter sw = File.AppendText(path))
+                    {
+                        sw.WriteLine(word);
+                    }
+                    return true;
                 }
-                return true;
             }
             return false;
         }
@@ -180,7 +216,7 @@ namespace Lab_03_Word_Guess
                     wordList[i] = wordRemove == wordList[i].ToLower() ? " " : wordList[i];
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 Console.WriteLine("Oops...something went wrong");
             }
@@ -191,13 +227,14 @@ namespace Lab_03_Word_Guess
                     if (wordList[i] != " ") sw.WriteLine(wordList[i]);
                 }
             }
-        }/// <summary>
-         /// This takes in the path of the file and reads the contents
-         /// into an array and will randomly select a word based
-         /// off of that
-         /// </summary>
-         /// <param name="path">Location of file</param>
-         /// <returns>The randomly selected word</returns>
+        }
+        /// <summary>
+        /// This takes in the path of the file and reads the contents
+        /// into an array and will randomly select a word based
+        /// off of that
+        /// </summary>
+        /// <param name="path">Location of file</param>
+        /// <returns>The randomly selected word</returns>
         public static string WordGrabber(string path)
         {
             string[] wordList = ReadFile(path);
@@ -205,53 +242,84 @@ namespace Lab_03_Word_Guess
             int randNum = random.Next(0, wordList.Length);
             return wordList[randNum];
         }
-
+        /// <summary>
+        /// This method is the main Guessing Game. It prepares the
+        /// word to be passed and checked into the WordChecker method
+        /// </summary>
+        /// <param name="mysteryWord">Randomly grabbed word</param>
         static void GuessingGame(string mysteryWord)
         {
             string guesses = "";
             bool guessing = true;
             string[] reveal = new string[mysteryWord.Length];
-            char[] word = mysteryWord.ToCharArray();
-            int lettersLeft = mysteryWord.Length;
 
             while (guessing)
             {
-                Console.Clear();
+                int lettersLeft = 0;
+
                 for (int i = 0; i < mysteryWord.Length; i++)
                 {
-                    if (reveal[i] == null) Console.Write("|_|");
-                    else Console.Write($"{reveal[i]}");
+                    if (reveal[i] == null) Console.Write(" _ ");
+                    else Console.Write($" {reveal[i]} ");
                 }
-
-                Console.WriteLine($" User Guesses: {guesses}");
+                Console.Write("\n\n");
+                Console.WriteLine($"User Guesses: {guesses}");
                 Console.WriteLine(" ");
                 Console.WriteLine("Please guess a letter!");
+                Console.WriteLine("psssst....spaces count too..cough cough...");
                 string userGuess = Console.ReadLine();
-                try
+
+                if (userGuess.Length < 2)
                 {
-                    if (userGuess.Length < 2)
-                    {
-                        guesses = guesses + userGuess;
-                        if (mysteryWord.Contains(userGuess))
-                        {
-                            char[] check = userGuess.ToCharArray();
-                            for (int i = 0; i < mysteryWord.Length; i++)
-                            {
-                                if(check[0] == word[i])
-                                {
-                                    reveal[i] = userGuess;
-                                    lettersLeft--;
-                                }
-                            }
-                        }
-                    }
-                    guessing = lettersLeft > 0 ? true : false;
-                }
-                catch (IndexOutOfRangeException)
-                {
-                    Console.WriteLine("I see what you did there...sorry can't just press enter!");
+                    bool goodGuess = WordChecker(mysteryWord, userGuess, guesses, reveal);
+                    guesses = guesses + userGuess;
+                    if (goodGuess) Console.WriteLine("Woohoo! Good Guess");
+                    else Console.WriteLine("Try again!");
                     Console.ReadLine();
                 }
+
+                for (int i = 0; i < mysteryWord.Length; i++)
+                {
+                    if (reveal[i] == null) lettersLeft++;
+                }
+                guessing = lettersLeft > 0 ? true : false;
+                Console.Clear();
+            }
+        }
+        /// <summary>
+        /// This method takes user input and compares to the mystery word and previous
+        /// guesses.
+        /// </summary>
+        /// <param name="mysteryWord">The randomly selected word</param>
+        /// <param name="userGuess">User input</param>
+        /// <param name="guesses">Contains string of user current's guesses</param>
+        /// <param name="reveal">The comparison array</param>
+        /// <returns>True or false based on if the users guess is contained in the mystery word</returns>
+        public static bool WordChecker(string mysteryWord, string userGuess,string guesses, string[] reveal)
+        {
+            try
+            {
+                char[] word = mysteryWord.ToCharArray();
+
+                if (mysteryWord.Contains(userGuess))
+                {
+                    char[] check = userGuess.ToCharArray();
+                    for (int i = 0; i < mysteryWord.Length; i++)
+                    {
+                        if (check[0] == word[i]) reveal[i] = userGuess;
+                    }
+                }
+                if (guesses.Contains(userGuess))
+                {
+                    Console.WriteLine("You've already guessed that!");
+                    return false;
+                }
+                return mysteryWord.Contains(userGuess);
+            }
+            catch (IndexOutOfRangeException)
+            {
+                Console.WriteLine("I see what you did there...sorry can't just press enter!");
+                return false;
             }
         }
         /// <summary>
