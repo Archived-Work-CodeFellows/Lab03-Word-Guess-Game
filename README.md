@@ -49,5 +49,5 @@ Unit tests are including with the project.
 ![Guess-Game-Visual](lab03-word-guess-menu2.PNG)
 
 * This is a sample of game play
-![Game-Play](lab03-game-play.png)
+![Game-Play](lab03-game-play.PNG)
 ***
